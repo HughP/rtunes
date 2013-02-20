@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>Node js test</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+<script src="http://127.0.0.1:80/socket.io/socket.io.js"></script>
+</head>
+<body>
+<h2>Node js test</h2>
+
+<div style="height:400px;">
+    <div id="controls" style="height:400px; display: inline-block; width:20%; float:left; background-color:lightyellow;">
+        <input id="room1_check" type="checkbox" value="room_1" checked /><label for="room1_check">Room 1</label><br/><br/>
+        <input id="room2_check" type="checkbox" value="room_2" /><label for="room2_check">Room 2</label><br/><br/>
+        <input id="room3_check" type="checkbox" value="room_3" checked /><label for="room3_check">Room 3</label><br/><br/>
+        <input id="room4_check" type="checkbox" value="room_4" /><label for="room4_check">Room 4</label><br/><br/>
+        <input id="room5_check" type="checkbox" value="room_5" /><label for="room5_check">Room 5</label><br/><br/>
+    </div>
+
+    <div id="stream" style="height:400px; display: inline-block; width:40%; background-color:white; overflow:auto;"></div>
+
+    <div id="post" style="height:400px; display: inline-block; width:40%; float:right; background-color:yellow;">
+        <label for="postRoom">Room: </label>
+        <select id="postToRoom">
+            <option value="room_1">Room 1</option>
+            <option value="room_2">Room 2</option>
+            <option value="room_3">Room 3</option>
+            <option value="room_4">Room 4</option>
+            <option value="room_5">Room 5</option>
+        </select>
+        <br/><br/>
+        <label for="postBy">By: </label>
+        <select id="postBy">
+            <option value="User 1">User 1</option>
+            <option value="User 2">User 2</option>
+            <option value="User 3">User 3</option>
+            <option value="User 4">User 4</option>
+            <option value="User 5">User 5</option>
+        </select>
+        <br/><br/>
+        <label for="postMessage">Message:</label><br/>
+        <textarea id="postMessage" style="width:80%; height:100px;" ></textarea>
+        <br/><br/>
+        <input id="postBtn" type="button" value="post message" />
+    </div>
+
+</div>
+
+
+<script>
+    var socket = io.connect('http://127.0.0.1:80');
+
+    var checkedRooms = [];
+    $('#controls :checked').each(function() {
+        checkedRooms.push($(this).val());
+    });
+    socket.emit('join', checkedRooms);
+
+    socket.on('publish', function (post) {
+        //console.log(data);
+        $("#stream").html($("#stream").html() + "room: " + post.room + "<br/>");
+        $("#stream").html($("#stream").html() + "by: " + post.by + "<br/>");
+        $("#stream").html($("#stream").html() + "on: " + post.on + "<br/>");
+        $("#stream").html($("#stream").html() + "message: " + unescape(post.message) + "<br/>");
+        $("#stream").html($("#stream").html() + "=============================================<br/>");
+    });
+
+    $('#controls :checkbox').change(function () {
+        socket.emit(this.checked ? 'join' : 'leave', $(this).val());
+     });
+
+    $("#postBtn").click(function() {
+        socket.emit('post', {room: $("#postToRoom").val(), message: escape($("#postMessage").val()), by: $("#postBy").val(), on: (new Date() + "") });
+    });
+
+</script>
+
+</body>
+</html>
