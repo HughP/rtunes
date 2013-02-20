@@ -1,0 +1,240 @@
+.default {
+    padding:0px 80px 50px 80px;
+    font-family:"Lucida Grande","bitstream vera sans","trebuchet ms",sans-serif,verdana;
+    background-image: url('images/wallpaper/2.jpg');
+}
+
+.default .x-panel-body-default{
+	background-color:transparent !important;
+}
+
+.default .x-panel-body-default {
+	border: 0 px solid #fff !important;
+}
+
+.default .x-border-layout-ct{
+	background-color:transparent !important;
+	border-color:transparent !important;
+}
+
+.default .x-panel-header-default{
+	background:transparent !important;
+}
+
+.default .x-grid-row-alt .x-grid-cell, .default .x-grid-row-alt .x-grid-rowwrap-div{
+	background:transparent !important;
+}
+
+.default .x-grid-row .x-grid-cell, .default .x-column-header, .default .x-grid-header-ct, .default .x-toolbar-default{
+	background:transparent !important;
+	border-collapse: collapse;
+	border-top: 0px;
+}
+
+.default .x-grid-cell-inner, .default .x-toolbar-default {
+	color: #fff !important;
+}
+
+.default .x-column-header-text, .default .x-panel-header-text{
+	color:#fff;
+	font-weight: bold;
+}
+
+.default .x-grid-with-row-lines .x-grid-cell{
+	border:0px;
+}
+
+.default .x-grid-table{
+	border-collapse: collapse !important;
+}
+
+.default .x-grid-row-selected{
+	background-color: rgba(194, 255, 0, 0.25) !important;
+	border-bottom: 1px solid rgb(194, 255, 0) !important;
+} 
+
+.default .x-grid-row-focused{
+
+}
+
+.default .label{
+	font-weight: bold;
+	color: #fff;
+}
+
+.default .value{
+	font-weight: bold;
+	color: #fff;
+}
+
+.default .rtunes-top-controls{
+	float:right !important;
+	width:auto !important;
+}
+
+.default .rtunes-top-controls .x-form-cb-label{
+	color: #fff !important;
+}
+
+::-webkit-scrollbar{    
+	width: 10px;
+}          
+
+::-webkit-scrollbar-button {
+    //-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border:1px solid rgba(39, 156, 185, 0.6);
+    width: 14px;
+    height: 14px;
+}
+
+::-webkit-scrollbar-button:vertical:decrement 
+{
+	background-color: rgba(45, 184, 238, 0.2);
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
+}
+
+::-webkit-scrollbar-button:vertical:increment 
+{
+	background-color: rgba(45, 184, 238, 0.2);
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+::-webkit-scrollbar-button:horizontal:decrement 
+{
+	background-color: rgb(0, 198, 247);
+}
+
+::-webkit-scrollbar-button:horizontal:increment 
+{
+	background-color: rgb(0, 198, 247);
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-border-radius:4px;
+    background-color:rgba(45, 184, 238, 0.61);
+    border: 1px solid #fff;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background-color:#BBB;
+}
+
+.default .rtunes-top-controls{
+	position :absolute;
+	right:0px;
+}
+
+.default .rtunes-player-grid .x-grid-cell-inner, .default .rtunes-player-grid .x-toolbar-default {
+	color: #fff !important;
+}
+
+.default .x-grid-header-hidden .x-grid-body{
+	border: 0px;
+}
+
+.default .x-border-region-slide-in{
+	background-color: #bbb;
+}
+
+.default .rtunes-console .x-column-header-text, .default .rtunes-console .x-panel-header-text{
+	color: #fff !important;
+}
+
+.default .rtunes-east-panel .x-panel-header-text-container{
+	text-align: left !important;
+	color: #fff !important;
+}
+
+.default .jp-stop, .default .jp-previous, .default .jp-next {
+	width: 32px !important;
+	height: 32px !important;
+	margin-top: 10px !important;
+}
+
+.default .jp-play, .default .jp-pause{
+	width: 52px !important;
+	height: 52px !important;
+}
+
+.default .jp-play{
+	background: url("images/icons/black_play.png") 0 0 no-repeat !important;
+	background-size: 52px 52px !important;
+}
+
+.default .jp-pause{
+	background: url("images/icons/black_pause.png") 0 0 no-repeat !important;
+	background-size: 52px 52px !important;
+}
+
+.default .jp-previous{
+	background: url("images/icons/black_prev.png") 0 0 no-repeat !important;
+	background-size: 32px 32px !important;
+}
+
+.default .jp-next{
+	background: url("images/icons/black_fwd.png") 0 0 no-repeat !important;
+	background-size: 32px 32px !important;
+}
+
+.default .jp-mute {
+	background: url("images/icons/vol_start.png") 0 0 no-repeat !important;
+	background-size: 20px 20px !important
+}
+
+.default .jp-mute:hover {
+	background: url("images/icons/vol_start.png") 0 0 no-repeat !important;
+	background-size: 20px 20px !important
+}
+
+.default .jp-unmute {
+	background: url("images/icons/vol_mute.png") 0 0 no-repeat !important;
+	background-size: 20px 20px !important;
+}
+
+.default .jp-unmute:hover {
+	background: url("images/icons/vol_mute.png") 0 0 no-repeat !important;
+	background-size: 20px 20px !important;
+}
+
+.default .jp-volume-max {
+	background: url("images/icons/vol_full.png") 0 0 no-repeat !important;
+	background-size: 20px 20px !important;
+}
+
+.default .jp-volume-max:hover {
+	background: url("images/icons/vol_full.png") 0 0 no-repeat !important;
+	background-size: 20px 20px !important;
+}
+
+.default div.jp-video a.jp-mute, .default div.jp-video a.jp-unmute, .default .jp-mute, .default .jp-unmute, .default .jp-volume-max {
+	width: 20px !important;
+	height: 20px !important;
+}
+
+.default div.jp-video a.jp-volume-max {
+	margin-left: 150px !important;
+	margin-top: 17px !important;
+}
+
+.default div.jp-video a.jp-mute, .default div.jp-video a.jp-unmute {
+	margin-top: 17px !important;
+	margin-left: 25px !important;
+}
+
+.default div.jp-volume-bar {
+	width: 99px !important;
+	height: 7px !important;
+	margin-top: 25px !important;
+	margin-left: 163px !important;
+}
+
+.default div.jp-interface ul.jp-controls {
+	margin-top: 0px !important;
+}
+
+.default .x-panel-body{
+	border: 0px solid red !important;
+}

@@ -1,0 +1,103 @@
+body {
+    font-family:"Lucida Grande","bitstream vera sans","trebuchet ms",sans-serif,verdana;
+}
+
+div.jp-video div.jp-duration {
+	margin-right: 0px !important;
+}
+
+div.jp-video div.jp-current-time {
+	margin-left: 0px !important;
+}
+
+div.jp-video div.jp-type-playlist ul.jp-controls {
+	width: auto !important;
+	margin-left: 0px !important;
+}
+
+.jp-stop, .jp-previous, .jp-next {
+	width: 32px !important;
+	height: 32px !important;
+	margin-top: 10px !important;
+}
+
+.jp-play, .jp-pause{
+	width: 52px !important;
+	height: 52px !important;
+}
+
+.jp-play{
+	background: url("images/icons/black_play.png") 0 0 no-repeat !important;
+	background-size: 52px 52px !important;
+}
+
+.jp-pause{
+	background: url("images/icons/black_pause.png") 0 0 no-repeat !important;
+	background-size: 52px 52px !important;
+}
+
+.jp-previous{
+	background: url("images/icons/black_prev.png") 0 0 no-repeat !important;
+	background-size: 32px 32px !important;
+}
+
+.jp-next{
+	background: url("images/icons/black_fwd.png") 0 0 no-repeat !important;
+	background-size: 32px 32px !important;
+}
+
+.jp-mute {
+	background: url("images/icons/vol_start.png") 0 0 no-repeat !important;
+	background-size: 20px 20px !important
+}
+
+.jp-mute:hover {
+	background: url("images/icons/vol_start.png") 0 0 no-repeat !important;
+	background-size: 20px 20px !important
+}
+
+.jp-unmute {
+	background: url("images/icons/vol_mute.png") 0 0 no-repeat !important;
+	background-size: 20px 20px !important;
+}
+
+.jp-unmute:hover {
+	background: url("images/icons/vol_mute.png") 0 0 no-repeat !important;
+	background-size: 20px 20px !important;
+}
+
+.jp-volume-max {
+	background: url("images/icons/vol_full.png") 0 0 no-repeat !important;
+	background-size: 20px 20px !important;
+}
+
+.jp-volume-max:hover {
+	background: url("images/icons/vol_full.png") 0 0 no-repeat !important;
+	background-size: 20px 20px !important;
+}
+
+div.jp-video a.jp-mute, div.jp-video a.jp-unmute, .jp-mute, .jp-unmute, .jp-volume-max {
+	width: 20px !important;
+	height: 20px !important;
+}
+
+div.jp-video a.jp-volume-max {
+	margin-left: 150px !important;
+	margin-top: 17px !important;
+}
+
+div.jp-video a.jp-mute, div.jp-video a.jp-unmute {
+	margin-top: 17px !important;
+	margin-left: 25px !important;
+}
+
+div.jp-volume-bar {
+	width: 99px !important;
+	height: 5px !important;
+	margin-top: 25px !important;
+	margin-left: 163px !important;
+}
+
+div.jp-interface ul.jp-controls {
+	margin-top: 0px !important;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	   This is a jQuery Tools standalone demo. Feel free to copy/paste.
+	   http://flowplayer.org/tools/demos/
+	
+	   Do *not* reference CSS files and images from flowplayer.org when in
+	   production Enjoy!
+	-->
+	<head>
+		<title>me-music - ver 1.1 - Streaming</title>
+		<script src="../nodejs/socket/socket.io.js"></script>
+		<script>
+		    var audioBuffer = null;
+		    var context = null;
+		    function inits() {
+		    	alert('dim');
+		        try {
+		            context = new webkitAudioContext();
+		        } catch(e) {
+		            alert('Web Audio API is not supported in this browser');
+		        }
+		    }
+		
+		    function decodeHandler(buffer) {
+		        console.log(data);
+		    }
+		
+		    var socket = io.connect('http://127.0.0.1:8081');
+		    socket.on('message', function (data) {
+		            // HERE IS THE PROBLEM
+		        	console.log(data);/*
+		        context.decodeAudioData(data, decodeHandler, function(e) { 
+		        	console.log(e);
+		        });*/
+		    });
+		</script>
+	</head>
+	<body onLoad="inits();">
+	</body>
+</html>
