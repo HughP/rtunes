@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Extjs Sample Project" default="compile-deploy">
+	<description>Extjs Struts - Hibernate Build File</description>
+	<property file="employee.properties"/>
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+	<import file="common.xml"/>
+	
+	<!-- *** Main targets for this build file. *** -->
+	<target name="demo-target"
+				description="Target for Experiment">
+			<!-- Default value for copying. Passed via the command line. -->
+		<property name="tst" value="${eclipse.workspace}"/>
+		<echo message="${tst}"/>
+	</target>
+	
+	<!-- *** Main targets for this build file. *** -->
+	<target name="deploy-resources"
+			description="Deploy all resources to tomcat.">
+		<!-- Default value for copying. Passed via the command line. -->
+		<property name="resource.module" value="none"/>
+
+		<sync-folder todir="${webapp.root}/resources" basedir="${resource.module}"
+					 folder="${main.resources}" excludes="properties/"/>
+	</target>
+
+	<target name="deploy-config"
+				description="Deploy web content to tomcat. e.g, ant -Dweb.module=media deploy-web to deploy just that modules resouces or ant deploy-web to deploy all web">
+		<!-- Default value for copying. Passed via the command line. -->
+		<property name="config.module" value="none"/>
+
+		<sync-folder todir="${web.classes}/config" basedir="${config.module}"
+						 folder="${main.config}" filterfile="${filter.file}"/>
+	</target>
+
+	<target name="deploy-web"
+			description="Deploy web content to tomcat. e.g, ant -Dweb.module=media deploy-web to deploy just that modules resouces or ant deploy-web to deploy all web">
+		<!-- Default value for copying. Passed via the command line. -->
+		<property name="web.module" value="none"/>
+
+		<sync-folder todir="${webapp.root}" basedir="${web.module}"
+					 folder="${main.resources}"/>
+	</target>
+
+	<!-- Private target used to deploy resources directly. -->
+	<target name="-deploy-all-resources">
+		<echo message="Deploying all resources."/>
+
+		<me.copy todir="${webapp.root}/resources" verbose="true" overwrite="true">
+			<fileset dir="employee/${main.resources}" excludes="properties/" />
+		</me.copy>
+	</target>
+
+	<target name="compile" description="Compiles all source files for all modules.">
+		<init-output-dirs base="."/>
+		<mkdir dir="${web.classes}"/>
+		<me.javac destdir="${web.classes}" memoryMaximumSize="512m" fork="true">
+			<src refid="compile"/>
+			<classpath refid="compile.lib"/>
+		</me.javac>
+
+		<!-- Copy resources that should be in the package structure. -->
+		<me.copy todir="${web.classes}" includeemptydirs="false">
+			<fileset dir="employee/${main.java}" excludes="**/*.java"/>
+		</me.copy>
+	</target>
+
+	<target name="jar-modules" depends="compile" description="Copies classes from the correct package to create the jars.">
+		<delete dir="${scaffold.modules}"/>
+		<mkdir dir="${scaffold.modules}"/>
+		<package-module module-name="employee" module-dir="employee" />
+		<copy todir="${scaffold.webapp.lib}">
+			<fileset dir="${scaffold.modules}"/>
+		</copy>
+	</target>
+
+	<target name="war" depends="package, jar-modules" description="Creates the WAR.">
+		<!-- Delete the classes from the deployment as they are not needed in the war. -->
+		<delete dir="${scaffold.webapp.classes}/com"/>
+
+		<jar destfile="${scaffold}/ROOT.war">
+			<fileset dir="${scaffold.webapp}"/>
+		</jar>
+	</target>
+
+	<target name="package" description="Packages the application." depends="compile">
+		<!--filter filtersfile="${filter.file}"/-->
+
+		<delete dir="${scaffold.webapp}"/>
+		<mkdir dir="${scaffold.webapp}"/>
+		<mkdir dir="${scaffold.webapp}"/>
+
+		<me.copy todir="${webapp.root}">
+			<fileset dir="employee/${main.resources}/"/>
+		</me.copy>
+
+		<me.copy todir="${web.config}" filtering="true" overwrite="true">
+			<fileset dir="employee/source/config"/>
+		</me.copy>
+		<me.copy flatten="true" todir="${web.lib}">
+			<fileset refid="compile.deploy.lib"/>
+		</me.copy>
+
+
+		<me.copy todir="${web.inf}" file="employee/source/WEB-INF/web.xml" filtering="true" overwrite="true"/>
+		<me.copy todir="${web.inf}" file="employee/source/WEB-INF/log4j.properties" filtering="true" overwrite="true"/>
+		<me.copy todir="${web.inf}" file="employee/source/WEB-INF/applicationContext.xml" filtering="true" overwrite="true"/>
+	</target>
+
+	<target name="deploy" depends="package" description="Deploys the web application.">
+		<sync todir="${webapp.root}">
+			<fileset dir="${scaffold.webapp}"/>
+		</sync>
+	</target>
+
+	<target name="clean" description="Cleans deployment area.">
+		<delete dir="${scaffold.webapp}"/>
+		<delete dir="${scaffold.classes}"/>
+		<delete dir="${webapp.root}"/>
+		<delete dir="${webapp}"/>
+	</target>
+
+	<!-- Deprecated!!! -->
+	<target name="copy-resources" description="DEPRECATED: User deploy-resources.Hot deployes: jsps, html and js resources." >
+		<echo message="Copying all resources."/>
+		<me.copy todir="${webapp.root}/resources" verbose="true">
+			<fileset dir=".">
+				<include name="**/${main.resources}/**"/>
+				<exclude name="**/${main.resources}/properties/"/>
+				<exclude name="**/${main.resources}/"/>
+			</fileset>
+			<regexpmapper handledirsep="yes" from="(.*/${main.resources})/(.*)" to="\2"/>
+		</me.copy>
+	</target>
+	
+	<target name="copy-lib" description="DEPRECATED: Copy all req. libs" >
+		<echo message="Copying all libraries required"/>
+		<mkdir dir="${web.inf}/lib"/>
+		<mkdir dir="${web.inf}/classes/config/jstl"/>
+		<me.copy todir="${web.inf}/lib">
+			<fileset dir="${source.lib}/lib/" includes="*.jar" />
+			<fileset dir="${source.lib}/lib/" includes="**/*.jar" />
+			<fileset dir="${source.lib}/lib/" includes="**/**/*.jar" />
+			<fileset dir="${source.lib}/lib/" includes="**/**/**/*.jar" />
+		</me.copy>
+		<!--me.copy todir="${web.inf}/classes/config/jstl">
+			<fileset dir="${source.lib}/jstl" includes="**/*.tld" />
+		</me.copy -->
+	</target>
+
+	<!-- Targets that call other targets only. -->
+
+	<target name="compile-deploy" depends="clean, compile, package, copy-lib" description="Cleans deployment area. Compiles and then deploys.">
+	</target>
+
+	<target name="run-jsunit-tests">
+		<mkdir dir="${scaffold}"/>
+		<mkdir dir="${logsDirectory}"/>
+
+		<junit showoutput="true" haltonerror="true" haltonfailure="true">
+			<formatter type="plain" usefile="false"/>
+			<classpath refid="jsunit-classpath"/>
+			<sysproperty key="browserFileNames" value="${jsunit.browsers}"/>
+			<sysproperty key="description" value="Base object JSUNIT tests."/>
+			<sysproperty key="closeBrowsersAfterTestRuns" value="false"/>
+			<sysproperty key="logsDirectory" value="${logsDirectory}"/>
+			<sysproperty key="port" value="${port}"/>
+			<sysproperty key="timeoutSeconds" value="${timeoutSeconds}"/>
+			<sysproperty key="url" value="${url}"/>
+			<test name="net.jsunit.StandaloneTest"/>
+		</junit>
+	</target>
+</project>
