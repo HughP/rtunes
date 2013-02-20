@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/employee" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+
+	<!-- Hibernate session factory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mappingResources">
+			<list>
+				<value>config/hibernate/Profile.hbm.xml</value>
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!--
+		Transaction manager for a single Hibernate SessionFactory (alternative
+		to JTA)
+	-->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<!--
+		Stock business object > <bean id="stockBo"
+		class="com.mkyong.stock.bo.impl.StockBoImpl"> <property
+		name="stockDao" ref="stockDao" /> </bean> <bean id="stockDao"
+		class="com.mkyong.stock.dao.impl.StockDaoImpl"> </bean
+	-->
+
+	<!-- Stock Data Access Object -->
+	<bean id="com.extjs.common.dao.IUserDetails" class="com.extjs.common.dao.impl.UserDetails">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="UserDetailsHibernateDao"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="com.extjs.common.dao.IUserDetails" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="store*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

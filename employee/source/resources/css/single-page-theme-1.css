@@ -1,0 +1,155 @@
+body {
+    padding:0px 80px 50px 80px;
+    font-family:"Lucida Grande","bitstream vera sans","trebuchet ms",sans-serif,verdana;
+    background-image: url('/images/Audio_Jungle.jpg');
+    background-position : 40% 0%;
+
+}
+
+/* get rid of those system borders being generated for A tags */
+a:active {
+    outline:none;
+}
+
+:focus {
+    -moz-outline-style:none;
+}
+img {
+	border:0;
+}
+
+.me-music-artwork {
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 14%;
+	right: 8.5%;
+	overflow: hidden;
+	border: 1px solid #DDD;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-webkit-transition-delay: 0s, 0s, 0s, 0s, 0s;
+	-webkit-transition-duration: 0.4000000059604645s, 0.4000000059604645s, 0.4000000059604645s, 0.4000000059604645s, 0.4000000059604645s;
+	-webkit-transition-property: left, top, -webkit-transform, -webkit-box-shadow, opacity;
+	-webkit-transition-timing-function: cubic-bezier(0.42, 0, 0.58, 1), cubic-bezier(0.42, 0, 0.58, 1), cubic-bezier(0.42, 0, 0.58, 1), linear, linear;
+	opacity: 0.5;
+	filter: alpha(opacity=30);
+	/*
+	-webkit-background-clip: border-box;
+	-webkit-background-origin: padding-box;
+	-webkit-background-size: contain;
+	-webkit-perspective: none;
+	-webkit-transform: matrix3d(0.38302222155948906, 0, 0.3213938048432696, 0, 0, 0.5, 0, 0, -0.6427876096865393, 0, 0.7660444431189781, 0, -462.80707897430824, 0, 551.5519990456643, 1);
+	*/
+}
+.me-music-artwork img{
+	height:60% !important;
+}
+
+
+
+#scroll {
+	//background-color:#000;
+	//opacity: 0.4;
+	//filter:alpha(opacity=40); /* For IE8 and earlier */
+	position:relative;
+	overflow:hidden;
+	border:1px solid #ddd;
+	//width:948px;
+	padding:15px;
+	height:73%;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+
+
+#tools {
+	width:9999em;
+	position:absolute;
+	height:400px;
+}
+
+.tool {
+	float:left;
+	color:#fff;
+	//width:60% !important;
+	height:468px;
+	//text-align:center;
+}
+
+.details {
+	font-size:18px;
+	color:#fff;
+	margin-top:-20px;
+	background-color:transparent;
+	padding:5px 148px;
+}
+
+
+#thumbs {
+	height:30px;
+	position:absolute;
+	bottom:0;//425px;
+	width:100%;
+	left:-8px;
+}
+
+.t {
+	padding:0 !important;
+	border:0 !important;
+}
+
+.t a {
+	margin-left:11px;
+	display:block;
+	width:99px;
+	float : left;
+	height:30px;
+	color:#fff;
+	cursor:pointer;
+}
+
+.t a.active {
+	cursor:default !important;
+}
+
+.navi {
+	float : right;
+	//margin-left:314px;
+	//_margin-left:304px;
+}
+
+/* CSS sprite for the navigation */
+#t0 		  { margin-left:20px; _margin-left:10px;}
+#t0.active { background-position:-21px 0 !important; }
+#t0:hover  { background-position:-21px -180px; }
+#t0:active { background-position:-21px -270px; }
+
+#t1			{ background-position:-325px -90px; }
+#t1:hover 	{ background-position:-325px -180px; }
+#t1:active	{ background-position:-325px -270px; }
+#t1.active	{ background-position:-325px 0 !important; }
+
+#t2			{ background-position:-435px -90px; }
+#t2:hover 	{ background-position:-435px -180px; }
+#t2:active	{ background-position:-435px -270px; }
+#t2.active	{ background-position:-435px 0 !important; }
+
+#t3			{ background-position:-545px -90px; }
+#t3:hover 	{ background-position:-545px -180px; }
+#t3:active	{ background-position:-545px -270px; }
+#t3.active	{ background-position:-545px 0 !important; }
+
+#t4			{ background-position:-655px -90px; }
+#t4:hover 	{ background-position:-655px -180px; }
+#t4:active	{ background-position:-655px -270px; }
+#t4.active	{ background-position:-655px 0 !important; }
+
+#t5			{ background-position:-765px -90px; }
+#t5:hover 	{ background-position:-765px -180px; }
+#t5:active	{ background-position:-765px -270px; }
+#t5.active	{ background-position:-765px 0 !important; }
+
+#t6			{ background-position:-875px -90px; }
+#t6:hover 	{ background-position:-875px -180px; }
+#t6:active	{ background-position:-875px -270px; }
+#t6.active	{ background-position:-875px 0 !important; }

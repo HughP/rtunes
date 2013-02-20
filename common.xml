@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="common">
+	<!-- Default property values. Can be overidden in the me-music.properties.
+	     SHOULD NOT BE CHANGED HERE UNLESS THE DEFAULT VALUE IS TO BE CHANGED!
+	-->
+	<property name="build.debug" value="false"/>
+
+	<!-- *** Templated path properties. *** -->
+	
+	<property name="scaffold" value="scaffold"/>
+	<property name="source" value="source"/>
+	<property name="webapp" value="webapp/ROOT"/>
+	
+	<property name="source.main" value="${source}"/>
+	<property name="source.lib" value="common-lib"/>
+	<property name="source.unit" value="${source}/test-unit"/>
+		
+	<property name="main.java" value="${source.main}/java"/>
+	<property name="main.resources" value="${source.main}/resources"/>
+	<property name="main.config" value="${source.main}/config"/>
+	
+	<property name="unit.java" value="${source.unit}/java"/>
+	<property name="config.properties" value="${main.config}/properties"/>
+	<property name="config.hibernate" value="${main.config}/hibernate"/>
+	<property name="scaffold.classes" value="${scaffold}/classes"/>
+	<property name="scaffold.unit-classes" value="${scaffold}/unit-classes"/>
+	
+	<property name="scaffold.webapp" value="${scaffold}/webapp"/>
+	<property name="scaffold.webapp.webinf" value="${scaffold.webapp}/WEB-INF"/>
+	<property name="scaffold.webapp.metainf" value="${scaffold.webapp}/META-INF"/>
+	<property name="scaffold.webapp.classes" value="${scaffold.webapp.webinf}/classes"/>
+	<property name="scaffold.webapp.lib" value="${scaffold.webapp.webinf}/lib"/>
+	<property name="scaffold.webapp.config" value="${scaffold.webapp.classes}/config"/>
+	<property name="scaffold.modules" value="${scaffold}/modules"/>
+	
+	<property name="webapp.root" value="webapp/ROOT"/>
+	<property name="web.inf" value="${webapp.root}/WEB-INF"/>
+	<property name="web.classes" value="${web.inf}/classes"/>
+	<property name="web.config" value="${web.classes}/config"/>
+	<property name="web.lib" value="${web.inf}/lib"/>
+
+	<!-- JBoss properties. -->
+	<property name="jboss.deploy.dir" value="${jboss.root}/server/default/deploy"/>
+	<property name="jboss.scaffold" value="${jboss.root}/${scaffold}"/>
+	<property name="jboss.scaffold.classes" value="${jboss.scaffold}/classes"/>
+	<property name="jboss.scaffold.sar" value="${jboss.scaffold}/jboss-sar"/>
+	<property name="jboss.scaffold.metainf" value="${jboss.scaffold.sar}/META-INF"/>
+	<property name="jboss.scaffold.conf" value="${jboss.scaffold.sar}/config"/>
+	<property name="jboss.sar" value="${jboss.scaffold}/bol-service.sar"/>
+	
+	<!-- *** Macros. *** -->
+	
+	<presetdef name="me.javac">
+        <javac debug="true" target="1.5" source="1.5" encoding="UTF-8" nowarn="true">
+        </javac>
+    </presetdef>
+	
+	<!-- Allows setting of verbose so we can debug easily. -->
+	<presetdef name="me.copy">
+		<copy verbose="${build.debug}"/>
+	</presetdef>
+	
+	<macrodef name="sync-folder" description="Sync a folder up.">
+			<attribute name="todir" description="The directory to sync to."/>
+			<attribute name="basedir" default="none" description="The base directory to copy from."/>
+			<attribute name="folder" description="The folder to sync."/>
+			<attribute name="excludes" default="" description="The pattern to exclude from being copied."/>
+			<attribute name="filterfile" default="none"/>
+			
+			<sequential>
+				<if>
+					<not><equals arg1="@{filterfile}" arg2="none"/></not>
+					<then>
+						<filter filtersfile="${filter.file}"/>
+					</then>
+				</if>
+				
+				<if>
+					<equals arg1="@{basedir}" arg2="none"/>
+					<!-- Deploy all modules if no module is specified. -->
+					<then>
+						<me.copy todir="@{todir}" verbose="true" overwrite="false" filtering="true">
+							<fileset dir="employee/@{folder}" excludes="@{excludes}" erroronmissingdir="false"/>
+						</me.copy>
+					</then>
+					<!-- Otherwise just deploy the module's resources. -->
+					<else>
+						<property name="fromdir" value="@{basedir}/@{folder}"/>
+						
+						<echo message="Copying ${basedir}'s artefacts."/>
+						
+						<!-- Do some checking so we don't fail without a good error message. -->
+						<available property="module.found" file="${fromdir}"/>
+						<fail unless="module.found" message="Could not find module's directory to copy."/>
+						
+						<me.copy todir="@{todir}" verbose="true" overwrite="false">
+							<fileset dir="${fromdir}" excludes="@{excludes}"/>	
+						</me.copy>
+					</else>
+				</if>
+			</sequential>
+	</macrodef>
+	
+	<macrodef name="init-output-dirs">
+        <attribute name="base"/>
+		
+        <sequential>
+        	<!-- Tidy up first. -->
+        	<delete dir="@{base}/${scaffold}"/>
+        	
+        	<!-- Create the folder structure. -->
+            <mkdir dir="@{base}/${scaffold}"/>
+            <mkdir dir="@{base}/${scaffold.classes}"/>
+        </sequential>
+    </macrodef>
+	
+	<macrodef name="copy-from-package">
+		<attribute name="package"/>
+		<attribute name="todir"/>
+		
+		<sequential>
+			<copy todir="@{todir}">
+				<fileset dir="scaffold/classes">
+					<include name="com/ctspace/fusion/@{package}/**/*"/>
+				</fileset>
+			</copy>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="package-module">
+		<attribute name="module-name"/>
+		<attribute name="module-dir"/>
+		
+		<sequential>
+			<copy-from-package package="@{module-name}"
+							   todir="${scaffold.modules}/classes"/>
+			
+			<jar destfile="${scaffold.modules}/fusion-@{module-name}.jar">
+				<fileset dir="${scaffold.modules}/classes"></fileset>
+			</jar>
+			
+			<delete dir="${scaffold.modules}/classes"/>
+		</sequential>
+	</macrodef>
+	
+	<!-- *** Common targets. *** -->
+	
+	<target name="-check-properties" unless="properties-checked">
+		<echo message="Checking properties file exists."/>
+		
+		<!-- Property to make sure that this target is called only once per chain. -->
+		<property name="properties-checked" value="true"/>
+		
+		<available file="local.properties" property="properties-missing"/>
+		<fail unless="properties-missing" message="No local.properties file found."/>	
+	</target>
+	
+	<!-- Classpath definitions. -->
+		<path id="compile.lib">
+	        <fileset dir="common-lib">
+	            <include name="common/*.jar" />
+	            <include name="compiletime/*.jar"/>
+	        </fileset>
+	    </path>
+		
+	    <fileset dir="common-lib" id="compile.deploy.lib">
+	        <include name="common/*.jar" />
+	        <include name="runtime/*.jar"/>
+	    </fileset>
+		
+		<path id="compile">
+			<pathelement path="employee/${main.java}"/>
+		</path>
+</project>
