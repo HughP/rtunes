@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="employee" type="com.extjs.common.presentation.forms.EmployeeForm" />
+		<form-bean name="landing" type="com.extjs.common.presentation.forms.LandingForm" />
+		<form-bean name="userForm" type="com.extjs.common.presentation.forms.UserForm" />
+		<form-bean name="rTunesForm" type="com.extjs.common.presentation.forms.RTunesForm" />
+	</form-beans>
+	
+	<global-forwards>
+		<forward name="result" path="/jsps/success.jsp" />
+		<forward name="welcome" path="/jsps/welcome.jsp" />
+	</global-forwards>
+
+	<action-mappings>
+		<action path="/welcome" forward="/jsps/welcome.jsp" />
+
+		<action path="/login"
+			type="com.extjs.common.presentation.actions.LoginAction" name="landing"
+			validate="false" scope="request">
+
+			<forward name="success" path="/ViewUserDetailAction.do" />
+			<forward name="fail" path="/jsps/fail.jsp" />
+		</action>
+		
+		<action path="/ViewUserDetailAction"
+			type="com.extjs.common.presentation.actions.ViewUserDetailAction"
+			name="landing" validate="false" scope="request">
+
+			<forward name="jsonSuccess" path="/jsps/ResponseJSON.jsp" />
+			<forward name="success" path="/jsps/welcome.jsp" />
+			<forward name="fail" path="/jsps/fail.jsp" />
+		</action>
+		
+		<action path="/rTunesAction"
+			type="com.extjs.common.presentation.actions.rTunesDetailAction"
+			name="rTunesForm" validate="false" scope="request">
+
+			<forward name="jsonSuccess" path="/jsps/ResponseJSON.jsp" />
+			<forward name="htmlSuccess" path="/jsps/ResponseHTML.jsp" />
+			<forward name="success" path="/jsps/welcome.jsp" />
+			<forward name="fail" path="/jsps/fail.jsp" />
+		</action>
+		
+		<action path="/rTunesMobileAction"
+			type="com.extjs.common.presentation.actions.rTunesMobileAction"
+			name="rTunesForm" validate="false" scope="request">
+
+			<forward name="jsonSuccess" path="/jsps/ResponseJSON.jsp" />
+			<forward name="htmlSuccess" path="/jsps/ResponseHTML.jsp" />
+			<forward name="success" path="/jsps/rTunesMobile.jsp" />
+			<forward name="fail" path="/jsps/fail.jsp" />
+		</action>
+		        
+	</action-mappings>
+	<!--message-resources parameter="ApplicationResources" /-->
+</struts-config>

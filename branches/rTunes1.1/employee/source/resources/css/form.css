@@ -1,0 +1,145 @@
+
+/* form style */
+#myform {
+    background:#333;
+    padding:15px 20px;
+    color:#eee;
+    width:800px;
+    margin:0 auto;
+    position:relative;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+}
+
+/* nested fieldset */
+#myform fieldset {
+    border:0;
+    margin:0;
+    padding:0;
+    background:#333333;
+}
+
+/* typography */
+#myform h3 { color:#eee; margin-top:0px; }
+#myform p { font-size:11px; }
+
+
+/* input field */
+#myform input {
+    border:1px solid #444;
+    background-color:#666;
+    padding:5px;
+    color:#ddd;
+    font-size:12px;
+
+    /* CSS3 spicing */
+    text-shadow:1px 1px 1px #000;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+}
+
+#myform input:focus { color:#fff; background-color:#777; }
+#myform input:active { background-color:#888; }
+
+
+/* button */
+#myform button {
+    outline:0;
+    border:1px solid #666;
+}
+
+
+/* error message */
+.error {
+    height:15px;
+    background-color:#FFFE36;
+    font-size:11px;
+    border:1px solid #E1E16D;
+    padding:4px 10px;
+    color:#000;
+    display:none;
+
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    -moz-border-radius-bottomleft:0;
+    -moz-border-radius-topleft:0;
+    -webkit-border-bottom-left-radius:0;
+    -webkit-border-top-left-radius:0;
+
+    -moz-box-shadow:0 0 6px #ddd;
+    -webkit-box-shadow:0 0 6px #ddd;
+}
+
+.error p {
+    margin:0;
+}
+
+/* field label */
+label {
+    display:block;
+    font-size:11px;
+    color:#ccc;
+}
+
+#terms label {
+    float:left;
+}
+
+#terms input {
+    margin:0 5px;
+}
+
+
+// Columns
+
+#myform {
+    width:500px;
+}
+
+#myform fieldset {
+    background-image:none;
+    float:left;
+    width:250px;
+}
+
+#myform label {
+    font-size:11px;
+    margin-top:20px;
+    display:block;
+}
+
+#myform label input {
+    display:block;
+}
+
+#myform label input[type=text] {
+	width : 225px;
+}
+
+#myform label input[type=textarea] {
+	width : 400px;
+	height : 350px;
+}
+
+.clear {
+    clear:both;
+    height:15px;
+}
+
+.error {
+    margin:0 0 2px;
+    padding:2px 6px;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+}
+
+.error em {
+    border:10px solid;
+    border-color:#FFFE36 transparent transparent;
+    bottom:-17px;
+    display:block;
+    height:0;
+    left:60px;
+    position:absolute;
+    width:0;
+}

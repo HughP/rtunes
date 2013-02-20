@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="com.extjs.common.entity.UserDetail" table="profile">
+
+		<id name="userId" type="java.lang.Integer" column="USER_ID">
+			<generator class="increment" />
+		</id>
+
+		<property name="userName" type="java.lang.String" column="USER_NAME"
+			not-null="true" unique="true" length="20" />
+
+		<property name="password" type="java.lang.String" column="PASSWORD"
+			not-null="true" length="20" />
+
+		<property name="firstName" type="java.lang.String" column="FIRST_NAME"
+			not-null="true" unique="true" length="20" />
+
+		<property name="lastName" type="java.lang.String" column="LAST_NAME"
+			not-null="true" unique="true" length="20" />
+
+		<property name="gender" type="java.lang.String" column="GENDER"
+			not-null="false" length="60" />
+
+		<property name="userType" type="java.lang.String" column="USER_TYPE"
+			not-null="true" length="30" />
+
+		<property name="email" type="java.lang.String" column="EMAIL"
+			not-null="false" length="30" />
+	</class>
+</hibernate-mapping>
